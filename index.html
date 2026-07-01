@@ -1,0 +1,1234 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Zeta Studio — Stay Organized & Productive</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Open+Sans:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #0d0d0f;
+        --bg2: #13131a;
+        --bg3: #1a1a24;
+        --accent: #7c5cfc;
+        --accent2: #a07bff;
+        --gold: #c9a96e;
+        --text: #e8e6f0;
+        --muted: #7a7890;
+        --border: rgba(255, 255, 255, 0.08);
+        --white: #ffffff;
+      }
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        font-family: "Open Sans", sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        line-height: 1.65;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      /* ── NAV ── */
+      nav {
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        background: rgba(13, 13, 15, 0.85);
+        backdrop-filter: blur(16px);
+        border-bottom: 1px solid var(--border);
+        padding: 0 clamp(1.5rem, 5vw, 4rem);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 62px;
+      }
+
+      .nav-logo {
+        font-family: "Playfair Display", serif;
+        font-size: 1.45rem;
+        color: var(--white);
+        text-decoration: none;
+        letter-spacing: 0.01em;
+      }
+      .nav-logo span {
+        color: var(--accent2);
+        font-style: italic;
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 2rem;
+        list-style: none;
+      }
+      .nav-links a {
+        font-size: 0.8rem;
+        font-weight: 600;
+        color: var(--muted);
+        text-decoration: none;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        transition: color 0.2s;
+      }
+      .nav-links a:hover {
+        color: var(--accent2);
+      }
+
+      /* ── HERO ── */
+      .hero {
+        padding: clamp(4rem, 9vw, 7rem) clamp(1.5rem, 5vw, 4rem)
+          clamp(3rem, 6vw, 5rem);
+        display: grid;
+        grid-template-columns: 1fr 1.1fr;
+        gap: 4rem;
+        align-items: center;
+        max-width: 1280px;
+        margin: 0 auto;
+      }
+
+      .hero-eyebrow {
+        font-family: "Open Sans", sans-serif;
+        font-size: 0.7rem;
+        font-weight: 700;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--accent2);
+        margin-bottom: 1.2rem;
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+      }
+      .hero-eyebrow::before {
+        content: "";
+        display: block;
+        width: 28px;
+        height: 1.5px;
+        background: var(--accent2);
+      }
+
+      .hero h1 {
+        font-family: "Playfair Display", serif;
+        font-size: clamp(2.4rem, 4.5vw, 3.8rem);
+        line-height: 1.12;
+        letter-spacing: -0.01em;
+        margin-bottom: 1.2rem;
+        color: var(--white);
+        font-weight: 700;
+      }
+      .hero h1 em {
+        font-style: italic;
+        color: var(--accent2);
+      }
+
+      .hero-desc {
+        font-size: 1rem;
+        color: var(--muted);
+        max-width: 400px;
+        line-height: 1.8;
+      }
+
+      /* ── HERO SLIDER ── */
+      .slider-wrap {
+        position: relative;
+        border-radius: 22px;
+        overflow: hidden;
+        background: var(--bg3);
+        box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
+        aspect-ratio: 4/3;
+      }
+
+      .slider-track {
+        display: flex;
+        width: 600%;
+        height: 100%;
+        transition: transform 0.55s cubic-bezier(0.77, 0, 0.18, 1);
+      }
+
+      .slide {
+        width: calc(100% / 6);
+        height: 100%;
+        flex-shrink: 0;
+        display: block;
+        position: relative;
+      }
+
+      .slide img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        transition: transform 0.4s;
+      }
+
+      .slide:hover img {
+        transform: scale(1.03);
+      }
+
+      .slide-overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          to top,
+          rgba(0, 0, 0, 0.65) 0%,
+          transparent 55%
+        );
+        pointer-events: none;
+      }
+
+      .slide-label {
+        position: absolute;
+        bottom: 1.2rem;
+        left: 1.4rem;
+        right: 1.4rem;
+        font-family: "Open Sans", sans-serif;
+        font-size: 0.82rem;
+        font-weight: 700;
+        color: #fff;
+        letter-spacing: 0.04em;
+        pointer-events: none;
+      }
+
+      /* Nav arrows */
+      .slider-btn {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 10;
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        border: none;
+        background: rgba(124, 92, 252, 0.85);
+        color: #fff;
+        font-size: 1.1rem;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background 0.2s;
+      }
+      .slider-btn:hover {
+        background: var(--accent);
+      }
+      .slider-btn.prev {
+        left: 0.75rem;
+      }
+      .slider-btn.next {
+        right: 0.75rem;
+      }
+
+      /* Dots */
+      .slider-dots {
+        position: absolute;
+        bottom: 0.9rem;
+        right: 1.2rem;
+        display: flex;
+        gap: 5px;
+      }
+      .dot {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.3);
+        cursor: pointer;
+        transition: background 0.2s, transform 0.2s;
+        border: none;
+      }
+      .dot.active {
+        background: var(--accent2);
+        transform: scale(1.3);
+      }
+
+      /* ── SHOPS ── */
+      .shops-section {
+        padding: clamp(3.5rem, 7vw, 5rem) clamp(1.5rem, 5vw, 4rem);
+        border-top: 1px solid var(--border);
+        border-bottom: 1px solid var(--border);
+        background: var(--bg2);
+      }
+
+      .shops-inner {
+        max-width: 900px;
+        margin: 0 auto;
+      }
+
+      .section-header {
+        text-align: center;
+        margin-bottom: 2.8rem;
+      }
+      .section-eyebrow {
+        font-size: 0.68rem;
+        font-weight: 700;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--accent2);
+        margin-bottom: 0.7rem;
+      }
+      .section-title {
+        font-family: "Playfair Display", serif;
+        font-size: clamp(1.7rem, 3vw, 2.4rem);
+        font-weight: 700;
+        letter-spacing: -0.01em;
+        color: var(--white);
+      }
+      .section-desc {
+        margin-top: 0.6rem;
+        font-size: 0.95rem;
+        color: var(--muted);
+        max-width: 460px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .shops-grid {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+
+      .shop-card {
+        background: var(--bg3);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 1.8rem 1.6rem;
+        text-decoration: none;
+        color: rgba(255, 255, 255, 0.8);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.6rem;
+        width: 180px;
+        text-align: center;
+        transition: all 0.25s;
+      }
+      .shop-card:hover {
+        background: rgba(124, 92, 252, 0.15);
+        border-color: var(--accent);
+        color: #fff;
+        transform: translateY(-4px);
+        box-shadow: 0 12px 40px rgba(124, 92, 252, 0.2);
+      }
+      .shop-icon {
+        font-size: 2rem;
+      }
+      .shop-name {
+        font-weight: 700;
+        font-size: 0.95rem;
+      }
+      .shop-url {
+        font-size: 0.7rem;
+        color: var(--muted);
+      }
+
+      /* ── SOCIAL ── */
+      .social-section {
+        padding: clamp(3rem, 6vw, 4.5rem) clamp(1.5rem, 5vw, 4rem);
+        background: var(--bg);
+        border-bottom: 1px solid var(--border);
+      }
+
+      .social-section .section-header {
+        margin-bottom: 2rem;
+      }
+
+      .social-links {
+        display: flex;
+        gap: 0.85rem;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      .social-link {
+        display: flex;
+        align-items: center;
+        gap: 0.55rem;
+        color: rgba(255, 255, 255, 0.65);
+        text-decoration: none;
+        font-size: 0.88rem;
+        font-weight: 600;
+        padding: 0.6rem 1.2rem;
+        border-radius: 100px;
+        border: 1px solid var(--border);
+        background: var(--bg2);
+        transition: all 0.2s;
+        letter-spacing: 0.02em;
+      }
+      .social-link:hover {
+        background: rgba(124, 92, 252, 0.2);
+        border-color: var(--accent);
+        color: #fff;
+        transform: translateY(-2px);
+      }
+      .social-link svg {
+        width: 15px;
+        height: 15px;
+        flex-shrink: 0;
+      }
+
+      /* ── PRODUCTS ── */
+      .products-section {
+        padding: clamp(4rem, 8vw, 6rem) clamp(1.5rem, 5vw, 4rem);
+        max-width: 1280px;
+        margin: 0 auto;
+      }
+
+      .products-category {
+        margin-bottom: 3.5rem;
+      }
+
+      .category-title-row {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin-bottom: 1.8rem;
+      }
+
+      .category-title-row h3 {
+        font-family: "Playfair Display", serif;
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--white);
+        white-space: nowrap;
+      }
+
+      .category-line {
+        flex: 1;
+        height: 1px;
+        background: var(--border);
+      }
+
+      .products-grid-3 {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.4rem;
+      }
+
+      .product-card {
+        background: var(--bg2);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        overflow: hidden;
+        text-decoration: none;
+        color: inherit;
+        transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+        display: flex;
+        flex-direction: column;
+      }
+      .product-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 16px 48px rgba(0, 0, 0, 0.35);
+        border-color: rgba(124, 92, 252, 0.4);
+      }
+
+      .product-img {
+        width: 100%;
+        aspect-ratio: 16/10;
+        object-fit: cover;
+        display: block;
+      }
+
+      .product-body {
+        padding: 1.1rem 1.2rem 1.3rem;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 0.4rem;
+      }
+
+      .product-tag {
+        font-size: 0.65rem;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--accent2);
+      }
+
+      .product-name {
+        font-family: "Open Sans", sans-serif;
+        font-size: 0.93rem;
+        font-weight: 600;
+        color: var(--text);
+        line-height: 1.35;
+      }
+
+      .product-store {
+        font-size: 0.75rem;
+        color: var(--muted);
+        margin-top: auto;
+        padding-top: 0.6rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .product-arrow {
+        width: 24px;
+        height: 24px;
+        background: rgba(124, 92, 252, 0.15);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--accent2);
+        font-size: 0.8rem;
+        transition: background 0.2s;
+      }
+      .product-card:hover .product-arrow {
+        background: var(--accent);
+        color: #fff;
+      }
+
+      /* ── FOOTER ── */
+      footer {
+        border-top: 1px solid var(--border);
+        padding: 2rem clamp(1.5rem, 5vw, 4rem);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 1rem;
+        max-width: 1280px;
+        margin: 0 auto;
+      }
+
+      .footer-logo {
+        font-family: "Playfair Display", serif;
+        font-size: 1.2rem;
+        color: var(--white);
+        font-style: italic;
+      }
+
+      .footer-tagline {
+        font-size: 0.8rem;
+        color: var(--muted);
+      }
+
+      .footer-social {
+        display: flex;
+        gap: 0.65rem;
+      }
+
+      .footer-social a {
+        width: 34px;
+        height: 34px;
+        border-radius: 50%;
+        background: var(--bg2);
+        border: 1px solid var(--border);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--muted);
+        text-decoration: none;
+        transition: all 0.2s;
+      }
+      .footer-social a:hover {
+        background: var(--accent);
+        color: #fff;
+        border-color: var(--accent);
+      }
+      .footer-social svg {
+        width: 14px;
+        height: 14px;
+      }
+
+      /* ── RESPONSIVE ── */
+      @media (max-width: 900px) {
+        .hero {
+          grid-template-columns: 1fr;
+        }
+        .slider-wrap {
+          order: -1;
+        }
+        .products-grid-3 {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+      @media (max-width: 580px) {
+        .products-grid-3 {
+          grid-template-columns: 1fr;
+        }
+        .nav-links {
+          display: none;
+        }
+        .shops-grid {
+          flex-direction: column;
+          align-items: center;
+        }
+        .shop-card {
+          width: 100%;
+          max-width: 280px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- NAV -->
+    <nav>
+      <a href="#" class="nav-logo">Zeta<span>Studio</span></a>
+      <ul class="nav-links">
+        <li><a href="#productos">Productos</a></li>
+        <li><a href="#tiendas">Tiendas</a></li>
+        <li><a href="#redes">Redes</a></li>
+      </ul>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-text">
+        <div class="hero-eyebrow">Productividad &amp; Organización</div>
+        <h1>
+          ¡Hacemos que sea más fácil mantenerse
+          <em>organizado y productivo!</em>
+        </h1>
+        <p class="hero-desc">
+          Planners digitales, trackers y recursos visuales diseñados para que
+          logres más en cada día — desde finanzas hasta rutinas de gimnasio.
+        </p>
+      </div>
+
+      <!-- SLIDER -->
+      <div class="slider-wrap" id="heroSlider">
+        <div class="slider-track" id="sliderTrack">
+          <a
+            class="slide"
+            href="https://zetastudiook.gumroad.com/l/MasterPlanerNotion"
+            target="_blank"
+          >
+            <img
+              src="https://r2.type.link/users/694f2e6d7c2a996489e191c6/4fbedcda-de5a-4e18-be93-a1b4d4cd8b05.png"
+              alt="Master Planner Notion"
+              loading="lazy"
+            />
+            <div class="slide-overlay"></div>
+            <div class="slide-label">Master Planner Notion</div>
+          </a>
+
+          <a
+            class="slide"
+            href="https://zetastudiook.gumroad.com/l/GymRoutine"
+            target="_blank"
+          >
+            <img
+              src="https://r2.type.link/users/694f2e6d7c2a996489e191c6/e760e7ef-cc05-45e7-9f14-71628203cb2e.png"
+              alt="Gym Routine"
+              loading="lazy"
+            />
+            <div class="slide-overlay"></div>
+            <div class="slide-label">Gym Routine Tracker</div>
+          </a>
+
+          <a
+            class="slide"
+            href="https://zetastudiook.gumroad.com/l/CreditCard"
+            target="_blank"
+          >
+            <img
+              src="https://r2.type.link/users/694f2e6d7c2a996489e191c6/910ca5ff-3166-4a30-918a-8fecf9a98cc7.png"
+              alt="Credit Card Tracker"
+              loading="lazy"
+            />
+            <div class="slide-overlay"></div>
+            <div class="slide-label">Credit Card Tracker</div>
+          </a>
+
+          <a
+            class="slide"
+            href="https://zetastudiook.gumroad.com/l/RetroStyle"
+            target="_blank"
+          >
+            <img
+              src="https://r2.type.link/users/694f2e6d7c2a996489e191c6/06cf6d30-f2ba-416c-be6a-202037f9ba11.png"
+              alt="Retro Style"
+              loading="lazy"
+            />
+            <div class="slide-overlay"></div>
+            <div class="slide-label">Retro Style Planner</div>
+          </a>
+
+          <a
+            class="slide"
+            href="https://zetastudiook.gumroad.com/l/DinoBabies"
+            target="_blank"
+          >
+            <img
+              src="https://r2.type.link/users/694f2e6d7c2a996489e191c6/cca93562-828a-412d-bcb0-1aaf7c4538d8.png"
+              alt="Dino Babies"
+              loading="lazy"
+            />
+            <div class="slide-overlay"></div>
+            <div class="slide-label">Dino Babies Activity Book</div>
+          </a>
+
+          <a
+            class="slide"
+            href="https://zetastudiook.gumroad.com/l/MyCloset"
+            target="_blank"
+          >
+            <img
+              src="https://r2.type.link/users/694f2e6d7c2a996489e191c6/264106e4-0b19-4a89-8866-d3ba17f5a465.png"
+              alt="My Closet"
+              loading="lazy"
+            />
+            <div class="slide-overlay"></div>
+            <div class="slide-label">My Closet Organizer</div>
+          </a>
+        </div>
+
+        <button class="slider-btn prev" id="sliderPrev" aria-label="Anterior">
+          &#8592;
+        </button>
+        <button class="slider-btn next" id="sliderNext" aria-label="Siguiente">
+          &#8594;
+        </button>
+
+        <div class="slider-dots" id="sliderDots">
+          <button class="dot active" data-i="0"></button>
+          <button class="dot" data-i="1"></button>
+          <button class="dot" data-i="2"></button>
+          <button class="dot" data-i="3"></button>
+          <button class="dot" data-i="4"></button>
+          <button class="dot" data-i="5"></button>
+        </div>
+      </div>
+    </section>
+
+    <!-- SHOPS -->
+    <section class="shops-section" id="tiendas">
+      <div class="shops-inner">
+        <div class="section-header">
+          <div class="section-eyebrow">Nuestras Tiendas</div>
+          <h2 class="section-title">
+            Encontranos en tus plataformas favoritas
+          </h2>
+          <p class="section-desc">
+            Elegí la tienda que más uses y encontrá todos nuestros productos.
+          </p>
+        </div>
+        <div class="shops-grid">
+          <a
+            href="https://zetastudiozeta.etsy.com"
+            target="_blank"
+            class="shop-card"
+          >
+            <div class="shop-icon">🛍️</div>
+            <div class="shop-name">Etsy</div>
+            <div class="shop-url">zetastudiozeta.etsy.com</div>
+          </a>
+          <a
+            href="https://zetastudiook.gumroad.com/"
+            target="_blank"
+            class="shop-card"
+          >
+            <div class="shop-icon">🎁</div>
+            <div class="shop-name">Gumroad</div>
+            <div class="shop-url">zetastudiook.gumroad.com</div>
+          </a>
+          <a
+            href="https://www.amazon.com/stores/Zeta-Studio/author/B0DP3RBZ7X"
+            target="_blank"
+            class="shop-card"
+          >
+            <div class="shop-icon">📦</div>
+            <div class="shop-name">Amazon</div>
+            <div class="shop-url">amazon.com — Zeta Studio</div>
+          </a>
+          <a
+            href="https://www.notion.so/@zetastudio"
+            target="_blank"
+            class="shop-card"
+          >
+            <div class="shop-icon">📓</div>
+            <div class="shop-name">Notion</div>
+            <div class="shop-url">notion.so/@zetastudio</div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- SOCIAL -->
+    <div class="social-section" id="redes">
+      <div class="section-header">
+        <div class="section-eyebrow">Seguinos</div>
+        <h2 class="section-title">✨ Follow us in our social media ✨</h2>
+      </div>
+      <div class="social-links">
+        <a
+          href="https://tiktok.com/@ZetaStudioOk"
+          target="_blank"
+          class="social-link"
+        >
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <path
+              d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V9.45a8.16 8.16 0 0 0 4.77 1.52V7.5a4.85 4.85 0 0 1-1-.81z"
+            />
+          </svg>
+          TikTok — @ZetaStudioOk
+        </a>
+        <a
+          href="https://www.instagram.com/zetastudi0/"
+          target="_blank"
+          class="social-link"
+        >
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <rect x="2" y="2" width="20" height="20" rx="5" />
+            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+          </svg>
+          Instagram — @zetastudi0
+        </a>
+        <a
+          href="https://www.facebook.com/ZetaStudioOk"
+          target="_blank"
+          class="social-link"
+        >
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <path
+              d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"
+            />
+          </svg>
+          Facebook — ZetaStudioOk
+        </a>
+        <a
+          href="https://ar.pinterest.com/zetastudiozeta/"
+          target="_blank"
+          class="social-link"
+        >
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <path
+              d="M12 0C5.373 0 0 5.373 0 12c0 5.084 3.163 9.426 7.627 11.174-.105-.949-.2-2.405.042-3.441.218-.937 1.407-5.965 1.407-5.965s-.359-.719-.359-1.782c0-1.668.967-2.914 2.171-2.914 1.023 0 1.518.769 1.518 1.69 0 1.029-.655 2.568-.994 3.995-.283 1.194.599 2.169 1.777 2.169 2.133 0 3.772-2.249 3.772-5.495 0-2.873-2.064-4.882-5.012-4.882-3.414 0-5.418 2.561-5.418 5.207 0 1.031.397 2.138.893 2.738a.36.36 0 0 1 .083.345l-.333 1.36c-.053.22-.174.267-.402.161-1.499-.698-2.436-2.889-2.436-4.649 0-3.785 2.75-7.262 7.929-7.262 4.163 0 7.398 2.967 7.398 6.931 0 4.136-2.607 7.464-6.227 7.464-1.216 0-2.359-.632-2.75-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146C9.57 23.812 10.763 24 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0z"
+            />
+          </svg>
+          Pinterest — zetastudiozeta
+        </a>
+        <a
+          href="https://www.notion.so/@zetastudio"
+          target="_blank"
+          class="social-link"
+        >
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <path
+              d="M4.459 4.208c.746.606 1.026.56 2.428.466l13.215-.793c.28 0 .047-.28-.046-.326L17.86 1.968c-.42-.326-.981-.7-2.055-.607L3.01 2.295c-.466.046-.56.28-.374.466zm.793 3.08v13.904c0 .747.373 1.027 1.214.98l14.523-.84c.841-.046.935-.56.935-1.167V6.354c0-.606-.233-.933-.748-.887l-15.177.887c-.56.047-.747.327-.747.933zm14.337.745c.093.42 0 .84-.42.888l-.7.14v10.264c-.608.327-1.168.514-1.635.514-.748 0-.935-.234-1.495-.933l-4.577-7.186v6.952L12.21 19s0 .84-1.168.84l-3.222.186c-.093-.186 0-.653.327-.746l.84-.233V9.854L7.822 9.76c-.094-.42.14-1.026.793-1.073l3.456-.233 4.764 7.279v-6.44l-1.215-.139c-.093-.514.28-.887.747-.933zM1.936 1.035l13.31-.98c1.634-.14 2.055-.047 3.082.7l4.249 2.986c.7.513.934.653.934 1.213v16.378c0 1.026-.373 1.634-1.68 1.726l-15.458.934c-.98.047-1.448-.093-1.962-.747l-3.129-4.06c-.56-.747-.793-1.306-.793-1.96V2.667c0-.839.374-1.54 1.447-1.632z"
+            />
+          </svg>
+          Notion — @zetastudio
+        </a>
+      </div>
+    </div>
+
+    <!-- PRODUCTS -->
+    <section class="products-section" id="productos">
+      <div class="section-header" style="margin-bottom: 3rem">
+        <div class="section-eyebrow">Catálogo</div>
+        <h2 class="section-title">Productos Destacados</h2>
+      </div>
+
+      <!-- ORGANIZACIÓN -->
+      <div class="products-category">
+        <div class="category-title-row">
+          <h3>Organización</h3>
+          <div class="category-line"></div>
+        </div>
+        <div class="products-grid-3">
+          <a
+            href="https://zetastudiook.gumroad.com/l/MasterPlanerNotion"
+            target="_blank"
+            class="product-card"
+          >
+            <img
+              class="product-img"
+              src="https://r2.type.link/users/694f2e6d7c2a996489e191c6/4fbedcda-de5a-4e18-be93-a1b4d4cd8b05.png"
+              alt="Master Planner Notion"
+              loading="lazy"
+            />
+            <div class="product-body">
+              <div class="product-tag">Notion</div>
+              <div class="product-name">Master Planner Notion</div>
+              <div class="product-store">
+                <span>Gumroad</span>
+                <div class="product-arrow">→</div>
+              </div>
+            </div>
+          </a>
+          <a
+            href="https://zetastudiook.gumroad.com/l/GymRoutine"
+            target="_blank"
+            class="product-card"
+          >
+            <img
+              class="product-img"
+              src="https://r2.type.link/users/694f2e6d7c2a996489e191c6/e760e7ef-cc05-45e7-9f14-71628203cb2e.png"
+              alt="Gym Routine"
+              loading="lazy"
+            />
+            <div class="product-body">
+              <div class="product-tag">Fitness</div>
+              <div class="product-name">Gym Routine Tracker</div>
+              <div class="product-store">
+                <span>Gumroad</span>
+                <div class="product-arrow">→</div>
+              </div>
+            </div>
+          </a>
+          <a
+            href="https://zetastudiook.gumroad.com/l/ToDoListsKit"
+            target="_blank"
+            class="product-card"
+          >
+            <img
+              class="product-img"
+              src="https://r2.type.link/users/694f2e6d7c2a996489e191c6/66a7d69e-bb66-4d7a-8784-523549fd01b0.jpeg"
+              alt="To Do Lists Kit"
+              loading="lazy"
+            />
+            <div class="product-body">
+              <div class="product-tag">Productividad</div>
+              <div class="product-name">To-Do Lists Kit</div>
+              <div class="product-store">
+                <span>Gumroad</span>
+                <div class="product-arrow">→</div>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <!-- FINANZAS -->
+      <div class="products-category">
+        <div class="category-title-row">
+          <h3>Finanzas</h3>
+          <div class="category-line"></div>
+        </div>
+        <div class="products-grid-3">
+          <a
+            href="https://zetastudiook.gumroad.com/l/CreditCard"
+            target="_blank"
+            class="product-card"
+          >
+            <img
+              class="product-img"
+              src="https://r2.type.link/users/694f2e6d7c2a996489e191c6/910ca5ff-3166-4a30-918a-8fecf9a98cc7.png"
+              alt="Credit Card Tracker"
+              loading="lazy"
+            />
+            <div class="product-body">
+              <div class="product-tag">Finanzas</div>
+              <div class="product-name">Credit Card Tracker</div>
+              <div class="product-store">
+                <span>Gumroad</span>
+                <div class="product-arrow">→</div>
+              </div>
+            </div>
+          </a>
+          <a
+            href="https://www.amazon.com/dp/B0DMTBZBNS"
+            target="_blank"
+            class="product-card"
+          >
+            <img
+              class="product-img"
+              src="https://r2.type.link/users/694f2e6d7c2a996489e191c6/f2706353-eace-4897-a740-f0e549cf44fe.png"
+              alt="Planner Imprimible"
+              loading="lazy"
+            />
+            <div class="product-body">
+              <div class="product-tag">Amazon</div>
+              <div class="product-name">Budget Planner Imprimible</div>
+              <div class="product-store">
+                <span>Amazon</span>
+                <div class="product-arrow">→</div>
+              </div>
+            </div>
+          </a>
+          <a
+            href="https://www.amazon.com/dp/B0DNCSQ19M"
+            target="_blank"
+            class="product-card"
+          >
+            <img
+              class="product-img"
+              src="https://r2.type.link/users/694f2e6d7c2a996489e191c6/1f6eeb48-2c59-4c78-b79c-e1efbce9fa4b.jpeg"
+              alt="Amazon Finance"
+              loading="lazy"
+            />
+            <div class="product-body">
+              <div class="product-tag">Amazon</div>
+              <div class="product-name">Finance Tracker Printable</div>
+              <div class="product-store">
+                <span>Amazon</span>
+                <div class="product-arrow">→</div>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <!-- LIBROS DE COLOREAR -->
+      <div class="products-category">
+        <div class="category-title-row">
+          <h3>Libros de colorear</h3>
+          <div class="category-line"></div>
+        </div>
+        <div class="products-grid-3">
+          <a
+            href="https://zetastudiook.gumroad.com/l/DinoBabies"
+            target="_blank"
+            class="product-card"
+          >
+            <img
+              class="product-img"
+              src="https://r2.type.link/users/694f2e6d7c2a996489e191c6/cca93562-828a-412d-bcb0-1aaf7c4538d8.png"
+              alt="Dino Babies"
+              loading="lazy"
+            />
+            <div class="product-body">
+              <div class="product-tag">Familia</div>
+              <div class="product-name">Dino Babies Activity Book</div>
+              <div class="product-store">
+                <span>Gumroad</span>
+                <div class="product-arrow">→</div>
+              </div>
+            </div>
+          </a>
+          <a
+            href="https://zetastudiook.gumroad.com/l/japan"
+            target="_blank"
+            class="product-card"
+          >
+            <img
+              class="product-img"
+              src="https://r2.type.link/users/694f2e6d7c2a996489e191c6/5dbb4384-50f8-4269-93de-143ffb04951d.jpeg"
+              alt="Japan Coloring Book"
+              loading="lazy"
+            />
+            <div class="product-body">
+              <div class="product-tag">Arte</div>
+              <div class="product-name">Japan Coloring Book</div>
+              <div class="product-store">
+                <span>Gumroad</span>
+                <div class="product-arrow">→</div>
+              </div>
+            </div>
+          </a>
+          <a
+            href="https://zetastudiook.gumroad.com/l/RegencyPeriod"
+            target="_blank"
+            class="product-card"
+          >
+            <img
+              class="product-img"
+              src="https://r2.type.link/users/694f2e6d7c2a996489e191c6/264106e4-0b19-4a89-8866-d3ba17f5a465.png"
+              alt="Regency Period"
+              loading="lazy"
+            />
+            <div class="product-body">
+              <div class="product-tag">Arte</div>
+              <div class="product-name">Regency Period Coloring Book</div>
+              <div class="product-store">
+                <span>Gumroad</span>
+                <div class="product-arrow">→</div>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <!-- ANIMACIONES ANIMADAS -->
+      <div class="products-category">
+        <div class="category-title-row">
+          <h3>Animaciones animadas</h3>
+          <div class="category-line"></div>
+        </div>
+        <div class="products-grid-3">
+          <a
+            href="https://zetastudiook.gumroad.com/l/VIToyStoryIng?layout=profile"
+            target="_blank"
+            class="product-card"
+          >
+            <img
+              class="product-img"
+              src="https://public-files.gumroad.com/3fjb8u6dfhnwgvlfrqkda1xoh8uf"
+              alt="Personalized animated Toy Story birthday invitation 🎂"
+              loading="lazy"
+            />
+            <div class="product-body">
+              <div class="product-tag">Birthday</div>
+              <div class="product-name">
+                Personalized animated Toy Story birthday invitation
+              </div>
+              <div class="product-store">
+                <span>Gumroad</span>
+                <div class="product-arrow">→</div>
+              </div>
+            </div>
+          </a>
+          <a
+            href="https://zetastudiook.gumroad.com/l/Marioing?layout=profile"
+            target="_blank"
+            class="product-card"
+          >
+            <img
+              class="product-img"
+              src="https://public-files.gumroad.com/2d869te0d750qletjcwddtk4uj3i"
+              alt="Retro Style"
+              loading="lazy"
+            />
+            <div class="product-body">
+              <div class="product-tag">Birthday</div>
+              <div class="product-name">
+                Personalized animated Mario Bros birthday invitation
+              </div>
+              <div class="product-store">
+                <span>Gumroad</span>
+                <div class="product-arrow">→</div>
+              </div>
+            </div>
+          </a>
+          <a
+            href="https://zetastudiook.gumroad.com/l/Blueybing?layout=profile"
+            target="_blank"
+            class="product-card"
+          >
+            <img
+              class="product-img"
+              src="https://public-files.gumroad.com/15wzytfo7j53jr3f8q0g6o95jch8"
+              alt="Period Calendar"
+              loading="lazy"
+            />
+            <div class="product-body">
+              <div class="product-tag">Birthday</div>
+              <div class="product-name">
+                Personalized animated Bluey birthday invitation
+              </div>
+              <div class="product-store">
+                <span>Gumroad</span>
+                <div class="product-arrow">→</div>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+      <div>
+        <div class="footer-logo">Zeta Studio</div>
+        <div class="footer-tagline">
+          We make it easier to stay organized &amp; productive!
+        </div>
+      </div>
+      <div class="footer-social">
+        <a
+          href="https://tiktok.com/@ZetaStudioOk"
+          target="_blank"
+          title="TikTok"
+        >
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <path
+              d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V9.45a8.16 8.16 0 0 0 4.77 1.52V7.5a4.85 4.85 0 0 1-1-.81z"
+            />
+          </svg>
+        </a>
+        <a
+          href="https://www.instagram.com/zetastudi0/"
+          target="_blank"
+          title="Instagram"
+        >
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <rect x="2" y="2" width="20" height="20" rx="5" />
+            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+          </svg>
+        </a>
+        <a
+          href="https://www.facebook.com/ZetaStudioOk"
+          target="_blank"
+          title="Facebook"
+        >
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <path
+              d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"
+            />
+          </svg>
+        </a>
+        <a
+          href="https://ar.pinterest.com/zetastudiozeta/"
+          target="_blank"
+          title="Pinterest"
+        >
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <path
+              d="M12 0C5.373 0 0 5.373 0 12c0 5.084 3.163 9.426 7.627 11.174-.105-.949-.2-2.405.042-3.441.218-.937 1.407-5.965 1.407-5.965s-.359-.719-.359-1.782c0-1.668.967-2.914 2.171-2.914 1.023 0 1.518.769 1.518 1.69 0 1.029-.655 2.568-.994 3.995-.283 1.194.599 2.169 1.777 2.169 2.133 0 3.772-2.249 3.772-5.495 0-2.873-2.064-4.882-5.012-4.882-3.414 0-5.418 2.561-5.418 5.207 0 1.031.397 2.138.893 2.738a.36.36 0 0 1 .083.345l-.333 1.36c-.053.22-.174.267-.402.161-1.499-.698-2.436-2.889-2.436-4.649 0-3.785 2.75-7.262 7.929-7.262 4.163 0 7.398 2.967 7.398 6.931 0 4.136-2.607 7.464-6.227 7.464-1.216 0-2.359-.632-2.75-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146C9.57 23.812 10.763 24 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0z"
+            />
+          </svg>
+        </a>
+      </div>
+    </footer>
+
+    <script>
+      const track = document.getElementById("sliderTrack");
+      const dots = document.querySelectorAll(".dot");
+      const total = 6;
+      let cur = 0,
+        timer;
+
+      function goTo(i) {
+        cur = (i + total) % total;
+        track.style.transform = `translateX(-${cur * (100 / 6)}%)`;
+        dots.forEach((d, idx) => d.classList.toggle("active", idx === cur));
+      }
+
+      function autoPlay() {
+        timer = setInterval(() => goTo(cur + 1), 4000);
+      }
+      function resetAuto() {
+        clearInterval(timer);
+        autoPlay();
+      }
+
+      document.getElementById("sliderPrev").addEventListener("click", () => {
+        goTo(cur - 1);
+        resetAuto();
+      });
+      document.getElementById("sliderNext").addEventListener("click", () => {
+        goTo(cur + 1);
+        resetAuto();
+      });
+      dots.forEach((d) =>
+        d.addEventListener("click", () => {
+          goTo(+d.dataset.i);
+          resetAuto();
+        })
+      );
+
+      autoPlay();
+    </script>
+  </body>
+</html>
