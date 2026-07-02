@@ -572,30 +572,77 @@
           max-width: 280px;
         }
       }
+
+      /* ── LANG SWITCHER ── */
+      .lang-switcher {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        background: rgba(255,255,255,0.05);
+        border: 1px solid var(--border);
+        border-radius: 100px;
+        padding: 3px;
+      }
+      .lang-btn {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        padding: 5px 12px;
+        border-radius: 100px;
+        border: none;
+        background: transparent;
+        color: var(--muted);
+        font-family: 'Open Sans', sans-serif;
+        font-size: 0.75rem;
+        font-weight: 700;
+        letter-spacing: 0.06em;
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+      .lang-btn .flag { font-size: 1rem; line-height: 1; }
+      .lang-btn:hover { color: var(--text); }
+      .lang-btn.active {
+        background: var(--accent);
+        color: #fff;
+      }
+      .nav-right {
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+      }
     </style>
   </head>
   <body>
     <!-- NAV -->
     <nav>
       <a href="#" class="nav-logo">Zeta<span>Studio</span></a>
-      <ul class="nav-links">
-        <li><a href="#productos">Productos</a></li>
-        <li><a href="#tiendas">Tiendas</a></li>
-        <li><a href="#redes">Redes</a></li>
-      </ul>
+      <div class="nav-right">
+        <ul class="nav-links">
+          <li><a href="#productos" data-i18n="nav_products">Productos</a></li>
+          <li><a href="#tiendas" data-i18n="nav_stores">Tiendas</a></li>
+          <li><a href="#redes" data-i18n="nav_social">Redes</a></li>
+        </ul>
+        <div class="lang-switcher">
+          <button class="lang-btn active" id="btnES" onclick="setLang('es')">
+            <span class="flag">🇦🇷</span> ES
+          </button>
+          <button class="lang-btn" id="btnEN" onclick="setLang('en')">
+            <span class="flag">🇺🇸</span> EN
+          </button>
+        </div>
+      </div>
     </nav>
 
     <!-- HERO -->
     <section class="hero">
       <div class="hero-text">
-        <div class="hero-eyebrow">Productividad &amp; Organización</div>
+        <div class="hero-eyebrow" data-i18n="hero_eyebrow">Productividad &amp; Organización</div>
         <h1>
-          ¡Hacemos que sea más fácil mantenerse
-          <em>organizado y productivo!</em>
+          <span data-i18n="hero_h1_a">¡Hacemos que sea más fácil mantenerse</span>
+          <em data-i18n="hero_h1_em">organizado y productivo!</em>
         </h1>
         <p class="hero-desc">
-          Planners digitales, trackers y recursos visuales diseñados para que
-          logres más en cada día — desde finanzas hasta rutinas de gimnasio.
+          <span data-i18n="hero_desc">Planners digitales, trackers y recursos visuales diseñados para que logres más en cada día — desde finanzas hasta rutinas de gimnasio.</span>
         </p>
       </div>
 
@@ -709,12 +756,12 @@
     <section class="shops-section" id="tiendas">
       <div class="shops-inner">
         <div class="section-header">
-          <div class="section-eyebrow">Nuestras Tiendas</div>
+          <div class="section-eyebrow" data-i18n="shops_eyebrow">Nuestras Tiendas</div>
           <h2 class="section-title">
-            Encontranos en tus plataformas favoritas
+            <span data-i18n="shops_title">Encontranos en tus plataformas favoritas</span>
           </h2>
           <p class="section-desc">
-            Elegí la tienda que más uses y encontrá todos nuestros productos.
+            <span data-i18n="shops_desc">Elegí la tienda que más uses y encontrá todos nuestros productos.</span>
           </p>
         </div>
         <div class="shops-grid">
@@ -761,8 +808,8 @@
     <!-- SOCIAL -->
     <div class="social-section" id="redes">
       <div class="section-header">
-        <div class="section-eyebrow">Social Media</div>
-        <h2 class="section-title">✨ Síguenos en nuestras redes sociales para enterarte de las nuevas novedades✨</h2>
+        <div class="section-eyebrow" data-i18n="social_eyebrow">Social Media</div>
+        <h2 class="section-title">✨ <span data-i18n="social_title">Síguenos en nuestras redes sociales para enterarte de las nuevas novedades</span> ✨</h2>
       </div>
       <div class="social-links">
         <a
@@ -838,14 +885,14 @@
     <!-- PRODUCTS -->
     <section class="products-section" id="productos">
       <div class="section-header" style="margin-bottom: 3rem">
-        <div class="section-eyebrow">Catálogo</div>
-        <h2 class="section-title">Productos Destacados</h2>
+        <div class="section-eyebrow" data-i18n="products_eyebrow">Catálogo</div>
+        <h2 class="section-title" data-i18n="products_title">Productos Destacados</h2>
       </div>
 
       <!-- ORGANIZACIÓN -->
       <div class="products-category">
         <div class="category-title-row">
-          <h3>Organización</h3>
+          <h3 data-i18n="cat_org">Organización</h3>
           <div class="category-line"></div>
         </div>
         <div class="products-grid-3">
@@ -915,7 +962,7 @@
       <!-- FINANZAS -->
       <div class="products-category">
         <div class="category-title-row">
-          <h3>Esenciales</h3>
+          <h3 data-i18n="cat_ess">Esenciales</h3>
           <div class="category-line"></div>
         </div>
         <div class="products-grid-3">
@@ -985,7 +1032,7 @@
       <!-- LIBROS DE COLOREAR -->
       <div class="products-category">
         <div class="category-title-row">
-          <h3>Libros de colorear</h3>
+          <h3 data-i18n="cat_books">Libros de colorear</h3>
           <div class="category-line"></div>
         </div>
         <div class="products-grid-3">
@@ -1055,7 +1102,7 @@
       <!-- ANIMACIONES ANIMADAS -->
       <div class="products-category">
         <div class="category-title-row">
-          <h3>Invitaciones animadas</h3>
+          <h3 data-i18n="cat_anim">Invitaciones animadas</h3>
           <div class="category-line"></div>
         </div>
         <div class="products-grid-3">
@@ -1134,7 +1181,7 @@
       <div>
         <div class="footer-logo">Zeta Studio</div>
         <div class="footer-tagline">
-          We make it easier to stay organized &amp; productive!
+          <span data-i18n="footer_tagline">Hacemos que sea más fácil mantenerse organizado y productivo.</span>
         </div>
       </div>
       <div class="footer-social">
@@ -1229,6 +1276,67 @@
       );
 
       autoPlay();
+
+      // ── I18N ──
+      const translations = {
+        es: {
+          nav_products: 'Productos',
+          nav_stores: 'Tiendas',
+          nav_social: 'Redes',
+          hero_eyebrow: 'Productividad & Organización',
+          hero_h1_a: '¡Hacemos que sea más fácil mantenerse',
+          hero_h1_em: 'organizado y productivo!',
+          hero_desc: 'Planners digitales, trackers y recursos visuales diseñados para que logres más en cada día — desde finanzas hasta rutinas de gimnasio.',
+          shops_eyebrow: 'Nuestras Tiendas',
+          shops_title: 'Encontranos en tus plataformas favoritas',
+          shops_desc: 'Elegí la tienda que más uses y encontrá todos nuestros productos.',
+          social_eyebrow: 'Social Media',
+          social_title: 'Síguenos en nuestras redes sociales para enterarte de las nuevas novedades',
+          products_eyebrow: 'Catálogo',
+          products_title: 'Productos Destacados',
+          cat_org: 'Organización',
+          cat_ess: 'Esenciales',
+          cat_books: 'Libros de colorear',
+          cat_anim: 'Invitaciones animadas',
+          footer_tagline: 'Hacemos que sea más fácil mantenerse organizado y productivo.',
+        },
+        en: {
+          nav_products: 'Products',
+          nav_stores: 'Stores',
+          nav_social: 'Social',
+          hero_eyebrow: 'Productivity & Organization',
+          hero_h1_a: 'We make it easier to stay',
+          hero_h1_em: 'organized and productive!',
+          hero_desc: 'Digital planners, trackers, and visual resources designed to help you achieve more every day — from finances to gym routines.',
+          shops_eyebrow: 'Our Stores',
+          shops_title: 'Find us on your favorite platforms',
+          shops_desc: 'Choose your preferred store and discover all our products.',
+          social_eyebrow: 'Social Media',
+          social_title: 'Follow us on our social media to stay up to date with all our latest news',
+          products_eyebrow: 'Catalog',
+          products_title: 'Featured Products',
+          cat_org: 'Organization',
+          cat_ess: 'Essentials',
+          cat_books: 'Coloring Books',
+          cat_anim: 'Animated Invitations',
+          footer_tagline: 'We make it easier to stay organized & productive.',
+        }
+      };
+
+      let currentLang = 'es';
+
+      function setLang(lang) {
+        currentLang = lang;
+        const t = translations[lang];
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+          const key = el.dataset.i18n;
+          if (t[key] !== undefined) el.textContent = t[key];
+        });
+        document.getElementById('btnES').classList.toggle('active', lang === 'es');
+        document.getElementById('btnEN').classList.toggle('active', lang === 'en');
+        document.documentElement.lang = lang;
+      }
+
     </script>
   </body>
 </html>
